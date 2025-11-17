@@ -97,9 +97,9 @@ Key attributes include ISBN, title, author, publication year, user ID, location,
 
 ---
 
-## **5. Your Contribution**
+## **5. My Contribution**
 
-Your specific work in this project:
+My specific work in this project:
 
 * Developed **item-based collaborative filtering**
 * Implemented **Cosine Similarity** for item–item comparisons
