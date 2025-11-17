@@ -1,0 +1,2 @@
+# Book-Recommendation-System-Collaborative-Filtering-SVD-
+This project builds a book recommendation system using multiple machine learning approaches, including popularity-based methods, user-based collaborative filtering, item-based collaborative filtering, and dimensionality reduction using SVD. The system analyzes user–book interactions to generate personalized, data-driven book recommendations.
