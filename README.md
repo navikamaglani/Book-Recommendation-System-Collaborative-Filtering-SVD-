@@ -1,9 +1,8 @@
 
----
 
 # **Book Recommendation System (Collaborative Filtering + SVD)**
 
-This project builds a book recommendation system using multiple machine learning approaches, including popularity-based methods, user-based collaborative filtering, item-based collaborative filtering, and dimensionality reduction using SVD. The system analyzes user–book interactions to generate personalized, data-driven book recommendations.
+This project builds a book recommendation system using popularity-based methods, user-based collaborative filtering, item-based collaborative filtering, and dimensionality reduction using SVD. The system analyzes user–book rating patterns to generate personalized recommendations.
 
 ---
 
@@ -12,25 +11,27 @@ This project builds a book recommendation system using multiple machine learning
 The goal is to recommend books based on:
 
 * Overall popularity
-* Similarity between users
-* Similarity between books
-* Latent features extracted using **Singular Value Decomposition (SVD)**
+* User–user similarity
+* Item–item similarity
+* Latent features learned through **Singular Value Decomposition (SVD)**
 
-Multiple similarity metrics and matrix decomposition techniques were evaluated to understand which models produce the best recommendations.
+Multiple similarity metrics and recommendation strategies were evaluated to determine which produced the most accurate results.
 
 ---
 
 ## **2. Dataset**
 
-The system uses three files from the Book-Crossing dataset:
+This project uses the **Book-Crossing Dataset**, which contains:
 
-| File            | Rows      | Columns | Description            |
-| --------------- | --------- | ------- | ---------------------- |
-| **Books.csv**   | 271,360   | 8       | Book metadata          |
-| **Users.csv**   | 278,858   | 3       | User demographics      |
-| **Ratings.csv** | 1,149,780 | 3       | User–book interactions |
+* **Books**: metadata such as title, author, publication year
+* **Users**: demographics such as age and location
+* **Ratings**: explicit 1–10 user ratings for books
 
-Key attributes include ISBN, title, author, publication year, user ID, location, age, and rating scores.
+📌 **Note:**
+The dataset is **not included in this repository** due to size constraints.
+The full dataset can be downloaded from public sources (e.g., Kaggle or official Book-Crossing archive).
+
+The notebook assumes the dataset has been loaded as DataFrames during preprocessing.
 
 ---
 
@@ -38,42 +39,39 @@ Key attributes include ISBN, title, author, publication year, user ID, location,
 
 ### **3.1 Popularity-Based Recommender**
 
-* Recommends books with the highest number of ratings
-* Filters books with **at least 250 ratings**
-* Produces a list of **top 50 popular books**
+* Ranks books by the number of ratings and average rating
+* Uses books with **≥ 250 ratings**
+* Provides a ranked list of top 50 overall books
 
 ---
 
 ### **3.2 User-Based Collaborative Filtering**
 
-* Keeps users with **≥ 200 ratings**
-* Keeps books with **≥ 50 ratings**
-* Computes similarity using:
+* Filters users with **≥ 200 ratings** and books with **≥ 50 ratings**
+* Computes similarities using:
 
   * Cosine Similarity
   * Euclidean Distance
-* Predicts missing ratings using user–user similarity
+* Predicts ratings using weighted ratings from similar users
 * Evaluated using **RMSE**
 
 ---
 
-### **3.3 Item-Based Collaborative Filtering (Your Contribution)**
+### **3.3 Item-Based Collaborative Filtering** *(My contribution)*
 
-* Retains users with **≥ 10 ratings**
-* Keeps books with **≥ 20 ratings**
-* Builds a **user–item ratings matrix**
-* Uses **Cosine Similarity** for item–item comparisons
-* Predicts ratings using weighted averages of similar items
-* Generates book–book recommendations
+* Filters users with **≥ 10 ratings** and books with **≥ 20 ratings**
+* Builds a user–item ratings matrix
+* Computes **item–item similarity** using Cosine Similarity
+* Predicts user ratings from weighted averages of similar items
 
 ---
 
-### **3.4 SVD-Based Dimensionality Reduction (Your Contribution)**
+### **3.4 SVD-Based Dimensionality Reduction** *(My contribution)*
 
-* Applies **Truncated SVD** to reduce matrix dimensionality
-* Reconstructs similarity matrix using latent features
-* Evaluates the performance trade-offs
-* Compares accuracy vs. non–SVD item-based CF
+* Uses **Truncated SVD** on the item–user matrix
+* Reduces dimensionality to latent features
+* Reconstructs similarity matrix
+* Compares accuracy vs. original item-based CF
 
 ---
 
@@ -88,34 +86,33 @@ Key attributes include ISBN, title, author, publication year, user ID, location,
 | Item-Based CF (No SVD)      | **6.892** |
 | Item-Based CF (SVD Reduced) | 7.531     |
 
-### **Key Insights**
+### **Insights**
 
-* **Cosine Similarity** outperformed Euclidean Distance
-* User-based CF had the highest accuracy but is slow
-* Item-based CF produced strong personalized results
-* SVD improved scalability but slightly reduced accuracy
+* Cosine Similarity performs best overall
+* Item-based collaborative filtering provides strong personalized recommendations
+* SVD helps scalability but slightly reduces accuracy
 
 ---
 
 ## **5. My Contribution**
 
-My specific work in this project:
+In this group project, I worked on:
 
-* Developed **item-based collaborative filtering**
-* Implemented **Cosine Similarity** for item–item comparisons
-* Built the **rating prediction algorithm** for item-based CF
-* Applied **Truncated SVD** to reduce matrix sparsity
-* Evaluated accuracy before and after dimensionality reduction
-* Wrote analysis and technical explanations for these sections
+* **Item-based collaborative filtering implementation**
+* Computing **Cosine Similarity** for item–item comparisons
+* Developing the **rating prediction logic** for item-based CF
+* Applying **Truncated SVD** for dimensionality reduction
+* Evaluating accuracy (RMSE before/after SVD)
+* Writing analysis and technical explanations for these modules
 
 ---
 
 ## **6. Future Work**
 
-* Integrate book metadata (genres, authors, embeddings)
-* Add demographic-aware recommendations
-* Use kNN or clustering for faster similarity search
-* Deploy as a web app or API
+* Add content-based features (genres, authors, embeddings)
+* Try demographic-based recommendations
+* Use k-NN or clustering for faster nearest-neighbor searches
+* Deploy the system as an API or web app
 * Explore hybrid recommenders (content + collaborative filtering)
 
 ---
@@ -125,11 +122,7 @@ My specific work in this project:
 ```
 book-recommender-system/
 │
-├── book_recommender.ipynb
-├── Books.csv
-├── Users.csv
-├── Ratings.csv
-│
+├── book_recommender.ipynb        # Main notebook (preprocessing, CF models, SVD)
 └── README.md
 ```
 
@@ -143,13 +136,13 @@ Install dependencies:
 pip install pandas numpy scikit-learn
 ```
 
-Open notebook:
+Open the notebook:
 
 ```
 jupyter notebook book_recommender.ipynb
 ```
 
-Run all cells to reproduce the results.
+
 
 ---
 
